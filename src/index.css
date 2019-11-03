@@ -11,3 +11,37 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.container {
+  display: grid;
+  grid-template-rows: minmax(20px, 90px);
+  height: 100vh;
+  margin: 20px;
+}
+
+h1, h2, h3 {
+  display: block;
+}
+
+.mark-container{
+  display: grid;
+  grid-template-columns: repeat( auto-fit, minmax(50px, 1fr) );;
+  border-radius: 9px;
+  height: 32px;
+  margin: 0 auto;
+  background-color: #EEEEF0;
+  text-align: center;
+}
+
+.active-mark {
+  background-color: white;
+  border: none;
+  margin: 4px;
+  border-radius: 7px;
+  box-shadow: 0 3px 8px rgba(255,255,255,0.12);
+}
+
+.submit-btn{
+  color: #007AFF;
+  margin: 10%;
+}
