@@ -55,3 +55,28 @@ button{
   grid-auto-flow: column;
   align-self: center;
 }
+
+.navi-bar-container button {
+  border: 0;
+  background: transparent;
+  font-size: 21px;
+  padding: 0;
+  display: block;
+  align-self: center;
+}
+
+.dots {
+  text-align: center;
+  font-size: 50px;
+  font-weight: 900;
+  color: lightgray;
+}
+
+.dots p {
+  display: inline-block;
+  margin: 0;
+}
+
+.dots p.active {
+  color: darkgray;
+}

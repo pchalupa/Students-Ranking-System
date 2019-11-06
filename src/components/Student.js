@@ -9,11 +9,11 @@ class Student extends React.Component {
     this.setStep = this.setStep.bind(this);
     this.state = {
       data: [
-        { criteria: 'Postoj', mark: '', weight: 5 },
-        { criteria: 'Informace', mark: '', weight: 5 },
-        { criteria: 'Oblečení', mark: '', weight: 5 },
-        { criteria: 'Vlasy', mark: '', weight: 5 },
-        { criteria: 'Obecné', mark: '', weight: 5 }
+        { criteria: 'Postoj', mark: '', weight: 1 },
+        { criteria: 'Informace', mark: '', weight: 1 },
+        { criteria: 'Oblečení', mark: '', weight: 1 },
+        { criteria: 'Vlasy', mark: '', weight: 1 },
+        { criteria: 'Obecné', mark: '', weight: 1 }
       ],
       sent: false,
       step: 0
@@ -41,7 +41,6 @@ class Student extends React.Component {
   checkFill() {
     this.state.data.map(criteria => {
       if (criteria['mark'] === '') {
-        console.log("pole nejsou vyplnena");
         return false;
       }
       return true;
@@ -68,8 +67,8 @@ class Student extends React.Component {
     return (
       <div className={"App container"} style={{height: window.innerHeight + 'px'}}>
         <div className={"title"}>Hodnocení žáků</div>
-        {criteriaList[this.state.step]}
-        <Navi step={this.state.step} newStep={this.setStep} criteriaLen={this.state.data.length} next={true} save={this.saveMarks} />
+        {(!this.state.sent) ? criteriaList[this.state.step] : 'Odesláno'}
+        {(!this.state.sent) ? <Navi step={this.state.step} newStep={this.setStep} criteriaLen={this.state.data.length} next={true} save={this.saveMarks} /> : ''}
       </div>
     )
   }
@@ -154,10 +153,19 @@ class Navi extends React.Component {
   }
 
   render() {
+    var dots = [];
+    for (var i = 0; i < this.props.criteriaLen; i++)
+    {
+      (i !== this.props.step) ?  dots.push(<p key={i}>·</p>) : dots.push(<p key={i} className={"active"}>·</p>);
+    }
+
     return (
       <div className={'navi-bar-container'}>
-       <button onClick={this.prevStep}>předchozí</button>
-        {(this.props.step < this.props.criteriaLen - 1) ? <button onClick={this.nextStep}>další</button> : <button name="submit" className={'submit-btn'} onClick={this.saveMarks}>Odeslat</button>}
+       <button onClick={this.prevStep}>←</button>
+       <div className={"dots"}>
+        {dots}
+      </div>
+        {(this.props.step < this.props.criteriaLen - 1) ? <button onClick={this.nextStep}>→</button> : <button name="submit" className={'submit-btn'} onClick={this.saveMarks}>Odeslat</button>}
       </div>
     )
   }
