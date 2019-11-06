@@ -7,29 +7,33 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
 .container {
   display: grid;
-  grid-template-rows: minmax(20px, 90px);
-  height: 100vh;
-  margin: 20px;
+  grid-template-columns: 1fr;
+  margin: 0 5vw;
 }
 
-h1, h2, h3 {
-  display: block;
+.title {
+  font-size: xx-large;
+  font-weight: 700;
+  align-self: center;
 }
 
-.mark-container{
+.mark-container {
   display: grid;
-  grid-template-columns: repeat( auto-fit, minmax(50px, 1fr) );;
+  grid-template-rows: repeat( auto-fit, minmax(50px, 1fr) );;
   border-radius: 9px;
-  height: 32px;
+  height: 50vh;
   background-color: #EEEEF0;
   text-align: center;
+}
+
+.mark-selector {
+  border: 0;
+  background-color: transparent;
+  color: black;
+  align-self: center;
+  height: 100%;
 }
 
 .active-mark {
@@ -41,7 +45,13 @@ h1, h2, h3 {
   transition: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-.submit-btn{
+button{
   color: #007AFF;
   align-self: baseline;
+}
+
+.navi-bar-container {
+  display: grid;
+  grid-auto-flow: column;
+  align-self: center;
 }

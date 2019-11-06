@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import Student from './components/Student';
 import Teacher from './components/Teacher';
 import Notfound from './components/notfound'
