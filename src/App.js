@@ -1,5 +1,5 @@
 import React from 'react';
-import Student from './components/Student/';
+import Student from './components/Student/Index';
 import Teacher from './components/Teacher/';
 import Notfound from './components/notfound';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
