@@ -1,11 +1,7 @@
 .results-container {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 1fr;
 	grid-template-rows: 0.25fr 1fr;
-	.title {
-		grid-column-end: 3;
-		grid-column-start: 1;
-	}
 
 	.overview-marks {
 		justify-content: center;

@@ -8,9 +8,6 @@ class Teacher extends React.Component {
 	constructor(props) {
 		super(props);
 		this.db = firebase.firestore().collection('evaluation');
-		this.state = {
-			validate: localStorage.getItem('validate')
-		};
 	}
 
 	render() {

@@ -34,7 +34,7 @@ class Results extends React.Component {
 										this.state.sumMark /
 										this.state.sumWeight
 								});
-								var contain = false;
+								let contain = false;
 								criteriaResults.map(item => {
 									if (
 										item['criteria'] ===
@@ -64,13 +64,30 @@ class Results extends React.Component {
 							}.bind(this)
 						);
 						db.get().then(snap => {
-							this.setState({ usersNum: snap.size / 5 });
+							this.setState({ usersNum: snap.size / 6 });
 						});
 					}.bind(this)
 				);
 			}.bind(this)
 		);
 	}
+
+	static restartEvaluation = () => {
+		firebase
+			.firestore()
+			.collection('evaluation')
+			.get()
+			.then(function(querySnapshot) {
+				querySnapshot.forEach(function(doc) {
+					firebase
+						.firestore()
+						.collection('evaluation')
+						.doc(doc.id)
+						.delete();
+				});
+			});
+		//this.setState({ sumMark: 0, sumWeight: 0, average: 0, usersNum: 0 });
+	};
 
 	render() {
 		return (
