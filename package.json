@@ -2,6 +2,7 @@
 	"name": "mark-app",
 	"version": "0.1.0",
 	"private": true,
+	"homepage": "https://www.zsbites.cz/hodnoceni/",
 	"dependencies": {
 		"firebase": "^7.2.3",
 		"node-sass": "^4.13.0",
