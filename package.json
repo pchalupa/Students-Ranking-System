@@ -4,11 +4,11 @@
 	"private": true,
 	"homepage": "https://www.zsbites.cz/hodnoceni/",
 	"dependencies": {
-		"firebase": "^7.2.3",
+		"firebase": "^7.5.0",
 		"node-sass": "^4.13.0",
-		"react": "^16.11.0",
-		"react-dom": "^16.11.0",
-		"react-redux": "^7.1.1",
+		"react": "^16.12.0",
+		"react-dom": "^16.12.0",
+		"react-redux": "^7.1.3",
 		"react-scripts": "3.2.0",
 		"react-transition-group": "^4.3.0",
 		"redux": "^4.0.4"
