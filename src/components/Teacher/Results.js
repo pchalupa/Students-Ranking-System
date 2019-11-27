@@ -18,56 +18,42 @@ class Results extends React.Component {
 		var criteriaResults = [];
 		db.onSnapshot(
 			function() {
-				db.get().then(
-					function(querySnapshot) {
-						querySnapshot.forEach(
-							function(doc) {
-								this.setState({
-									sumMark:
-										this.state.sumMark +
-										doc.data()['mark'] *
-											doc.data()['weight'],
-									sumWeight:
-										this.state.sumWeight +
-										doc.data()['weight'],
-									average:
-										this.state.sumMark /
-										this.state.sumWeight
-								});
-								let contain = false;
-								criteriaResults.map(item => {
-									if (
-										item['criteria'] ===
-										doc.data()['criteria']
-									) {
-										item['mark'] += parseInt(
-											doc.data()['mark']
-										);
-										item['count']++;
-										contain = true;
-									}
-									return 0;
-								});
-								if (!contain) {
-									let item = {
-										criteria: doc.data()['criteria'],
-										mark: parseInt(doc.data()['mark']),
-										count: 1
-									};
-									criteriaResults = criteriaResults.concat(
-										item
-									);
-								}
-								this.setState({
-									criteriaResults: criteriaResults
-								});
-							}.bind(this)
-						);
-						db.get().then(snap => {
-							this.setState({ usersNum: snap.size / 6 });
+				db.get().then(querySnapshot => {
+					querySnapshot.forEach(doc => {
+						this.setState({
+							sumMark:
+								this.state.sumMark +
+								doc.data()['mark'] * doc.data()['weight'],
+							sumWeight:
+								this.state.sumWeight + doc.data()['weight'],
+							average: this.state.sumMark / this.state.sumWeight
 						});
-					}.bind(this)
-				);
+						// Stack criterias by name and sum theri marks
+						let contain = false;
+						criteriaResults.map(item => {
+							if (item['criteria'] === doc.data()['criteria']) {
+								item['mark'] += parseInt(doc.data()['mark']);
+								item['count']++;
+								contain = true;
+							}
+							return 0;
+						});
+						if (!contain) {
+							let item = {
+								criteria: doc.data()['criteria'],
+								mark: parseInt(doc.data()['mark']),
+								count: 1
+							};
+							criteriaResults = criteriaResults.concat(item);
+						}
+						this.setState({
+							criteriaResults: criteriaResults
+						});
+					});
+					db.get().then(snap => {
+						this.setState({ usersNum: snap.size / 6 });
+					});
+				});
 			}.bind(this)
 		);
 	}
