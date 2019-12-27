@@ -30,6 +30,7 @@ export default class Student extends React.Component {
 
 	saveMarks() {
 		if (this.checkFill()) {
+			// Array to object
 			let result = {};
 			this.state.data.map((criteria, index) => {
 				return (result[index] = criteria);
@@ -42,7 +43,7 @@ export default class Student extends React.Component {
 	checkFill() {
 		let result = true;
 		this.state.data.map(criteria => {
-			if (criteria['mark'] === '') {
+			if (criteria['mark'] === 0) {
 				result = false;
 			}
 			return result;
