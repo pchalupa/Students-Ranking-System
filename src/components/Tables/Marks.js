@@ -1,17 +1,18 @@
 import React from 'react';
+import { scaleList } from '../../data/data';
 
-class Marks extends React.Component {
+export default class Marks extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			scale: [
-				{ name: '1', value: '1' },
-				{ name: '2', value: '2' },
-				{ name: '3', value: '3' },
-				{ name: '4', value: '4' },
-				{ name: '5', value: '5' }
-			]
+			scale: []
 		};
+	}
+
+	componentDidMount() {
+		this.setState({
+			scale: scaleList
+		});
 	}
 
 	sendData(e, mark) {
@@ -40,5 +41,3 @@ class Marks extends React.Component {
 		);
 	}
 }
-
-export default Marks;

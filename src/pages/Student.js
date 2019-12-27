@@ -1,32 +1,27 @@
 import React from 'react';
-import firebase from '../Firebase';
-import Controls from './Controls';
-import Criteria from './Criteria';
+import firebase from '../components/Firebase';
+import Controls from '../components/Navigation/Controls';
+import Criteria from '../components/Tables/Criteria';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import './styles/main.scss';
+import { criteriaList } from '../data/data';
 
-class Student extends React.Component {
+export default class Student extends React.Component {
 	constructor(props) {
 		super(props);
 		this.db = firebase.firestore().collection('evaluation');
 		this.saveMarks = this.saveMarks.bind(this);
 		this.setStep = this.setStep.bind(this);
 		this.state = {
-			data: [
-				{ criteria: 'Nadpis', mark: '', weight: 1 },
-				{ criteria: 'Obsah', mark: '', weight: 1 },
-				{ criteria: 'Grafická úprava', mark: '', weight: 1 },
-				{ criteria: 'Projev', mark: '', weight: 1 },
-				{ criteria: 'Zdroje', mark: '', weight: 1 },
-				{ criteria: 'Čas', mark: '', weight: 1 }
-			],
+			data: [],
 			sent: false,
 			step: 0
 		};
 	}
 
 	componentDidMount() {
-		localStorage.setItem('step', 0);
+		this.setState({
+			data: criteriaList
+		});
 	}
 
 	setStep(newStep) {
@@ -35,10 +30,11 @@ class Student extends React.Component {
 
 	saveMarks() {
 		if (this.checkFill()) {
-			this.state.data.map(criteria => {
-				this.db.add(criteria);
-				return true;
+			let result = {};
+			this.state.data.map((criteria, index) => {
+				return (result[index] = criteria);
 			});
+			this.db.add(result);
 			this.setState({ sent: true });
 		}
 	}
@@ -73,7 +69,7 @@ class Student extends React.Component {
 				<h2>Hodnocení bylo odesláno</h2>
 				<img
 					className={'thanks'}
-					src={require('./assets/thanks.gif')}
+					src={require('../assets/thanks.gif')}
 					alt={'thanks'}
 				/>
 			</div>
@@ -121,5 +117,3 @@ class Student extends React.Component {
 		);
 	}
 }
-
-export default Student;

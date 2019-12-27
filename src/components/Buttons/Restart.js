@@ -1,7 +1,7 @@
 import React from 'react';
-import Results from './Results';
+import Results from '../Table/Results';
 
-class Controls extends React.Component {
+export default class Restart extends React.Component {
 	render() {
 		return (
 			<div className={'controls-container'}>
@@ -15,5 +15,3 @@ class Controls extends React.Component {
 		);
 	}
 }
-
-export default Controls;

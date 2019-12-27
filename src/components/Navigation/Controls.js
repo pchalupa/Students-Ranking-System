@@ -4,7 +4,7 @@ import React from 'react';
  * Controls component
  * Render buttons for user and handles inputs.
  */
-class Controls extends React.Component {
+export default class Controls extends React.Component {
 	componentDidMount() {
 		this.props.newStep(0);
 	}
@@ -73,5 +73,3 @@ class Controls extends React.Component {
 		);
 	}
 }
-
-export default Controls;

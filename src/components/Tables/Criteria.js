@@ -1,7 +1,7 @@
 import React from 'react';
 import Marks from './Marks';
 
-class Criteria extends React.Component {
+export default class Criteria extends React.Component {
 	callbackFunction = resultMark => {
 		this.props.resultMark([this.props.name, resultMark]);
 	};
@@ -18,5 +18,3 @@ class Criteria extends React.Component {
 		);
 	}
 }
-
-export default Criteria;

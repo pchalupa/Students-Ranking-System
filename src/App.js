@@ -1,6 +1,6 @@
 import React from 'react';
-import Student from './components/Student/Student';
-import Teacher from './components/Teacher/Teacher';
+import Student from './pages/Student';
+import Teacher from './pages/Teacher';
 import Notfound from './components/notfound';
 import { Route, Switch, HashRouter } from 'react-router-dom';
 
