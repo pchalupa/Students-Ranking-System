@@ -20,19 +20,13 @@ export default class Results extends React.Component {
 
 		db.onSnapshot(snapshot => {
 			snapshot.docChanges().forEach(change => {
-				var data = this.state.data;
 				if (change.type === 'added') {
-					Object.values(change.doc.data()).map((criteria, index) => {
-						return (data[index].mark =
-							data[index].mark + parseInt(criteria.mark));
+					let data = this.state.data;
+					Object.values(change.doc.data()).map((mark, index) => {
+						return (data[index].mark = data[index].mark + mark);
 					});
 					this.setState({
 						data: data,
-						count: snapshot.size
-					});
-				}
-				if (change.type === 'removed') {
-					this.setState({
 						count: snapshot.size
 					});
 				}
@@ -40,50 +34,73 @@ export default class Results extends React.Component {
 		});
 	}
 
-	getMark = () => {
-		let sum = 0;
-		this.state.data.map(criteria => {
-			return (sum += parseInt(criteria.mark));
-		});
-		return sum / (this.state.count * this.state.data.length);
+	getMark = sumMark => {
+		return this.state.count > 0
+			? (sumMark / this.state.count).toFixed(2)
+			: 0;
 	};
 
-	static restartEvaluation = () => {
-		firebase
-			.firestore()
-			.collection('evaluation')
-			.get()
-			.then(function(querySnapshot) {
-				querySnapshot.forEach(function(doc) {
-					firebase
-						.firestore()
-						.collection('evaluation')
-						.doc(doc.id)
-						.delete();
-				});
+	getResultMark = () => {
+		let sum = 0;
+		this.state.data.map(criteria => {
+			return (sum += criteria.mark);
+		});
+		return this.state.count > 0
+			? (sum / (this.state.count * this.state.data.length)).toFixed(2)
+			: 0;
+	};
+
+	restartEvaluation = () => {
+		const db = firebase.firestore().collection('evaluation');
+		db.get().then(querySnapshot => {
+			querySnapshot.forEach(doc => {
+				db.doc(doc.id).delete();
 			});
+
+			let data = this.state.data;
+			data.map(criteria => {
+				return (criteria.mark = 0);
+			});
+
+			this.setState({
+				data: data,
+				count: 0
+			});
+		});
 	};
 
 	render() {
 		return (
-			<div className={'results-container'}>
-				<div className="title">
-					<p>Počet hodnocení: {this.state.count}</p>
+			<>
+				<div className={'results-container'}>
+					<div className="title">
+						<p>Počet hodnocení: {this.state.count}</p>
+					</div>
+					<div className={'overview-marks'}>
+						{this.state.data.map(results => (
+							<div
+								key={results['criteria']}
+								className={'criteria-item'}>
+								{results['criteria']}:
+								{' ' + this.getMark(results['mark'])}
+							</div>
+						))}
+					</div>
+					<div className={'final-mark'}>
+						Hodnocení
+						<br />
+						{this.getResultMark()}
+					</div>
 				</div>
-				<div className={'overview-marks'}>
-					{this.state.data.map(row => (
-						<div key={row['criteria']} className={'criteria-item'}>
-							{row['criteria']} :{' '}
-							{(row['mark'] / this.state.count).toFixed(2)}
-						</div>
-					))}
+				<div className={'controls-container'}>
+					<button
+						name="submit"
+						className={'submit-btn'}
+						onClick={this.restartEvaluation}>
+						Restart
+					</button>
 				</div>
-				<div className={'final-mark'}>
-					Hodnocení
-					<br />
-					{this.getMark().toFixed(2)}
-				</div>
-			</div>
+			</>
 		);
 	}
 }

@@ -2,15 +2,14 @@ import React from 'react';
 import firebase from '../components/Firebase';
 import Controls from '../components/Navigation/Controls';
 import Criteria from '../components/Tables/Criteria';
+import Thanks from '../components/Images/Thanks';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { criteriaList } from '../data/data';
 
 export default class Student extends React.Component {
 	constructor(props) {
 		super(props);
-		this.db = firebase.firestore().collection('evaluation');
-		this.saveMarks = this.saveMarks.bind(this);
-		this.setStep = this.setStep.bind(this);
+
 		this.state = {
 			data: [],
 			sent: false,
@@ -24,23 +23,25 @@ export default class Student extends React.Component {
 		});
 	}
 
-	setStep(newStep) {
+	setStep = newStep => {
 		this.setState({ step: newStep });
-	}
+	};
 
-	saveMarks() {
+	saveMarks = () => {
 		if (this.checkFill()) {
 			// Array to object
 			let result = {};
 			this.state.data.map((criteria, index) => {
-				return (result[index] = criteria);
+				return (result[index] = criteria.mark);
 			});
-			this.db.add(result);
+
+			const db = firebase.firestore().collection('evaluation');
+			db.add(result);
 			this.setState({ sent: true });
 		}
-	}
+	};
 
-	checkFill() {
+	checkFill = () => {
 		let result = true;
 		this.state.data.map(criteria => {
 			if (criteria['mark'] === 0) {
@@ -49,7 +50,7 @@ export default class Student extends React.Component {
 			return result;
 		});
 		return result;
-	}
+	};
 
 	onAddResult = result => {
 		this.state.data.map(item => {
@@ -63,19 +64,6 @@ export default class Student extends React.Component {
 			return true;
 		});
 	};
-
-	Thanks() {
-		return (
-			<div className={'thanks-container'}>
-				<h2>Hodnocení bylo odesláno</h2>
-				<img
-					className={'thanks'}
-					src={require('../assets/thanks.gif')}
-					alt={'thanks'}
-				/>
-			</div>
-		);
-	}
 
 	render() {
 		var criteriaList = [];
@@ -100,9 +88,7 @@ export default class Student extends React.Component {
 		return (
 			<div className={'App container'}>
 				<h1 className={'title'}>Hodnocení</h1>
-				{!this.state.sent
-					? criteriaList[this.state.step]
-					: this.Thanks()}
+				{!this.state.sent ? criteriaList[this.state.step] : <Thanks />}
 				{!this.state.sent ? (
 					<Controls
 						step={this.state.step}
