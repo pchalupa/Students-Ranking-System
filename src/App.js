@@ -4,18 +4,14 @@ import Teacher from './pages/Teacher';
 import Notfound from './components/notfound';
 import { Route, Switch, HashRouter } from 'react-router-dom';
 
-class App extends React.Component {
-	render() {
-		return (
-			<HashRouter>
-				<Switch>
-					<Route exact path="/" component={Student} />
-					<Route path="/teacher" component={Teacher} />
-					<Route component={Notfound} />
-				</Switch>
-			</HashRouter>
-		);
-	}
+export default function App() {
+	return (
+		<HashRouter>
+			<Switch>
+				<Route exact path="/" component={Student} />
+				<Route path="/teacher" component={Teacher} />
+				<Route component={Notfound} />
+			</Switch>
+		</HashRouter>
+	);
 }
-
-export default App;

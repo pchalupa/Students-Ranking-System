@@ -1,17 +1,15 @@
 import React from 'react';
-import Results from '../Table/Results';
+import Results from '../Tables/Results';
 
-export default class Restart extends React.Component {
-	render() {
-		return (
-			<div className={'controls-container'}>
-				<button
-					name="submit"
-					className={'submit-btn'}
-					onClick={Results.restartEvaluation}>
-					Restart
-				</button>
-			</div>
-		);
-	}
+export default function Restart() {
+	return (
+		<div className={'controls-container'}>
+			<button
+				name="submit"
+				className={'submit-btn'}
+				onClick={Results.restartEvaluation}>
+				Restart
+			</button>
+		</div>
+	);
 }
